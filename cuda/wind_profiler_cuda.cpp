@@ -26,18 +26,28 @@ double estimate_speed(double known_speed, double known_height, double estimated_
     return estimated_speed; 
 }
 
+
+
 // cuda version of estimate speed
 __global__ void estimate_speed_gpu(double *known_speed, double *known_height, double *estimated_height double *results)
 {
+    // use __shared___ to declare memory on device shared memory... mucho fasto -> __syncthreads() to synchronize
+
     // alpha ~1/7 
     double alpha_coef = 1.0 / 7.0;
     // thread id's 
     int i = blockDim.x*blockIdx.x + threadIdx.x;
+    // blockDim.x *   blockDim.y * blockDim.z * 
     results[i] = known_speed[i] * pow( (estimated_height[i]/known_height[i]), alpha_coef);
 }
 
+
 int main(int argc, char* argv[])
 {
+    //cudaGetDeviceCount(int *count)
+    //cudaSetDevice(int device)
+    //cudaGetDevice(int *device)
+    //cudaGetDeviceProperties(cudaDeviceProp *prop, int device)
     if (argc != 3) 
     {
 		cerr << "usage: ./progName wind_data.csv nthreads\n" << endl;
@@ -102,6 +112,16 @@ int main(int argc, char* argv[])
                         for ( i=2; i<=max_height; i++)
                         {
                             double estimated_height = (double) i;
+
+                            // time for cuda code...
+                            // use synchron or non...
+                            //cudaMemcpyAsync()
+                            // non sync transfer
+                            //cudaMemcpy()
+                            // synchronize gpu with cpu
+                            cudaDeviceSynchronize()
+
+
                             results = estimate_speed(known_speed, known_height, estimated_height);
                             // blocking so threads can write to output file
                             #pragma omp critical
