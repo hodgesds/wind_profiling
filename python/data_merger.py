@@ -25,4 +25,4 @@ for f in folders:
 					if not line.startswith("DataDBID"):
 						spl = line.split(",")
 						if len(spl) == 202:
-							outfile.write(",".join(spl[0:85] + "\n")
+							outfile.write(",".join(spl[0:85]) + "\n")
