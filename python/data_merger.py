@@ -27,4 +27,5 @@ for f in folders:
 						if len(spl) == 202:
 							print spl[1:84]
 							print len(spl[1:84])
+							raw_input()
 							outfile.write(",".join(spl[1:84]) + "\n")
