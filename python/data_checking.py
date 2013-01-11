@@ -11,4 +11,5 @@ for f in folders:
 		with open(l) as infile:
 			for line in infile:
 				spl = line.split(",")
-				print len(spl)
+				if len(spl) != 202:
+					print len(spl)
