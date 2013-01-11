@@ -2,7 +2,7 @@
 import os,sys
 
 # Here's our headers
-header_str = "DataTimeStamp,Sensor Serial Number,Sensor Application Version,Sensor Modbus Version,Message Count,Total Run Time,Total Laser Time,Reserved1,Modbus Max Registers,Modbus Range Gates,Modbus Node ID,Modbus Spare1,Laser State,Wiper Fluid State,Laser Fault State - BLU,Laser Fault State - RLU,Wiper State,Power Supply State,SNR State,Spare State 1,Spare State 2,Spare State 3,Timestamp (day),Timestamp (second),RG Width,RG1 Status,RG1 HWS 1s,RG1 HWS 3m,RG1 HWS 10m,RG1 HWD 1s,RG1 HWD 3m,RG1 HWD 10m,RG1 VWS 1s,RG1 VWA 1s,RG2 Status,RG2 HWS 1s,RG2 HWS 3m,RG2 HWS 10m,RG2 HWD 1s,RG2 HWD 3m,RG2 HWD 10m,RG2 VWS 1s,RG2 VWA 1s,RG3 Status,RG3 HWS 1s,RG3 HWS 3m,RG3 HWS 10m,RG3 HWD 1s,RG3 HWD 3m,RG3 HWD 10m,RG3 VWS 1s,RG3 VWA 1s,RG4 Status,RG4 HWS 1s,RG4 HWS 3m,RG4 HWS 10m,RG4 HWD 1s,RG4 HWD 3m,RG4 HWD 10m,RG4 VWS 1s,RG4 VWA 1s,RG5 Status,RG5 HWS 1s,RG5 HWS 3m,RG5 HWS 10m,RG5 HWD 1s,RG5 HWD 3m,RG5 HWD 10m,RG5 VWS 1s,RG5 VWA 1s,RG6 Status,RG6 HWS 1s,RG6 HWS 3m,RG6 HWS 10m,RG6 HWD 1s,RG6 HWD 3m,RG6 HWD 10m,RG6 VWS 1s,RG6 VWA 1s,Pitch (deg),Roll (deg),Heading (deg),Pitch Rate (deg/s),Roll Rate (deg/s),Yaw Rate (deg/s),Acceleration X (g),Acceleration Y (g),Acceleration Z (g),Range Gate Width\n"
+header_str = "DataDBID,DataTimeStamp,ModbusNodeID,SerialNumber,ModbusSpecVersion,ApplicationVersion,MessageCount,TotalRunTime,TotalLaserTime,JulianDay,SecondsSinceMidnight,ModbusMaxRegisters,ModbusNumberOfRangeGates,StatusRG1DataGood,StatusRG2DataGood,StatusRG3DataGood,StatusRG4DataGood,StatusRG5DataGood,StatusRG6DataGood,StatusLaserOn,StatusLowWiperFluid,StatusLaserFaultBLU,StatusLaserFaultRLU,StatusWiping,StatusOnExternalPower,StatusSNRThreshCalPeriod,WindSpeedHorRG1,WindSpeedHor3MinRG1,WindSpeedHor10MinRG1,WindDirHorRG1,WindDirHor3MinRG1,WindDirHor10MinRG1,WindSpeedVertRG1,WindAngleVertRG1,WindSpeedHorRG2,WindSpeedHor3MinRG2,WindSpeedHor10MinRG2,WindDirHorRG2,WindDirHor3MinRG2,WindDirHor10MinRG2,WindSpeedVertRG2,WindAngleVertRG2,WindSpeedHorRG3,WindSpeedHor3MinRG3,WindSpeedHor10MinRG3,WindDirHorRG3,WindDirHor3MinRG3,WindDirHor10MinRG3,WindSpeedVertRG3,WindAngleVertRG3,WindSpeedHorRG4,WindSpeedHor3MinRG4,WindSpeedHor10MinRG4,WindDirHorRG4,WindDirHor3MinRG4,WindDirHor10MinRG4,WindSpeedVertRG4,WindAngleVertRG4,WindSpeedHorRG5,WindSpeedHor3MinRG5,WindSpeedHor10MinRG5,WindDirHorRG5,WindDirHor3MinRG5,WindDirHor10MinRG5,WindSpeedVertRG5,WindAngleVertRG5,WindSpeedHorRG6,WindSpeedHor3MinRG6,WindSpeedHor10MinRG6,WindDirHorRG6,WindDirHor3MinRG6,WindDirHor10MinRG6,WindSpeedVertRG6,WindAngleVertRG6,Pitch,Roll,Heading,PitchRate,RollRate,YawRate,AccelerationX,AccelerationY,AccelerationZ,RangeGateWidth\n"
 
 # Directories
 data_dir = "/home/borgmaan/ws_gvsu/Data/One_Second_Data/"
@@ -14,9 +14,7 @@ for f in folders:
 	out_name = data_dir + f.split("/")[-2][4:len(f.split("/")[-2])] + ".csv"
 	print "Writing to", out_name
 	with open(out_name, "w") as outfile:
-		# Write out matching header
 		outfile.write(header_str)
-
 		# Grab all of the sub folder files
 		folder_files = [f + x for x in os.listdir(f)]
 		
@@ -24,6 +22,7 @@ for f in folders:
 		for l in folder_files:
 			with open(l) as infile:
 				for line in infile:
-					spl = line.split(",")
-					if len(spl) == 202:
-						outfile.write(line)
+					if not line.startswith("DataDBID"):
+						spl = line.split(",")
+						if len(spl) == 202:
+							outfile.write(",".join(spl[0:85] + "\n")
