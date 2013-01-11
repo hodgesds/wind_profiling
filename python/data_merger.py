@@ -13,7 +13,7 @@ for f in folders:
 	# Match names
 	out_name = data_dir + f.split("/")[-2][4:len(f.split("/")[-2])] + ".csv"
 	print "Writing to", out_name
-	with open(out_name) as outfile:
+	with open(out_name, "w") as outfile:
 		# Write out matching header
 		outfile.write(header_str)
 
