@@ -27,14 +27,14 @@ double estimate_speed(double known_speed, double known_height, double estimated_
 }
 
 
-
 // cuda version of estimate speed
 __global__ void estimate_speed_gpu(double *known_speed, double *known_height, double *estimated_height double *results)
 {
     // use __shared___ to declare memory on device shared memory... mucho fasto -> __syncthreads() to synchronize
-
+    // use __constant__  to store constant variable alpha
     // alpha ~1/7 
-    double alpha_coef = 1.0 / 7.0;
+    __constant__ double alpha_coef = 1.0 / 7.0;
+
     // thread id's 
     int i = blockDim.x*blockIdx.x + threadIdx.x;
     // blockDim.x *   blockDim.y * blockDim.z * 
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
                         // cout << known_speed << endl;
                         int i=2;
                         double results;
-                        #pragma omp parallel for num_threads(nthreads) private(i,results)
+                        //#pragma omp parallel for num_threads(nthreads) private(i,results)
                         for ( i=2; i<=max_height; i++)
                         {
                             double estimated_height = (double) i;
