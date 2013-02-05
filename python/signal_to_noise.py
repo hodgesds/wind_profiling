@@ -5,23 +5,17 @@
 # CV serves as baseline signal to noise ratio for screening purposes
 ##################################################################### 
 import os,sys
+from datetime import datetime
 import numpy
 import glob
+from csv import DictReader
 
-data = '/home/andrew/Desktop/windData/mergedData.csv'
-dest = '/home/borgmaan/ws_gvsu/results/'
+#new_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
 
-def stddev(numbers):
-	""" Computes standard deviation of 
-		a list of numbers ... slowly
-	"""
-	n = len(numbers)
-	listSum = sum(numbers)
-	squares = []
-	for num in numbers:
-		squares.append(num * num)
-	sum_of_squares = sum(squares)
-	return sqrt(sum_of_squares / n - (listSum / n) ** 2)
+# Testing on one of the merged files
+data = '/home/borgmaan/ws_gvsu/Data/One_Second_Data/May_2012.csv'
+dest = '/home/borgmaan/ws_gvsu/results'
+
 
 #Getting averages for different windows 5,10,15... second averages (from 5 seconds to 10 minutes:
 u = [5]

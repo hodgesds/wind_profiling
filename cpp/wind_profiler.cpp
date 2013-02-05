@@ -10,6 +10,8 @@
 #include <vector>
 #include <omp.h>
 
+// Range Gate Heights: 75, 90, 105, 125, 150, 175 meters
+
 using namespace std;
 // give openMP a big stacksize to work with...
 #define OMP_STACKSIZE 15G
