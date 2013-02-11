@@ -17,7 +17,7 @@ import os,sys
 * [10] Current wind direction
 * [11] Instantaneous Services Per Second
 """
-if len(sys.argv) <3):
+if len(sys.argv) <3:
     print "Usage: python message_7_converter.py outfile indir"
     raise RuntimeError('Ya done broke things')
 
