@@ -26,7 +26,7 @@ with open(sys.argv[1],'w') as ofile:
     for work in wfiles:
         # make sure only grabbing wind data files
         if '.TXT'  in work:
-            with open(work) as wfile:
+            with open(str(sys.argv[2]+work)) as wfile:
                 for row in wfile:
                     # grab out the time
                     time = row.replace('\n','').split("$")[0].replace("]","").replace("[","")
