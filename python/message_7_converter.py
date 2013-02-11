@@ -17,9 +17,12 @@ import os,sys
 * [10] Current wind direction
 * [11] Instantaneous Services Per Second
 """
+if len(sys.argv) <3) 
+    print "Usage: python message_7_converter.py outfile indir"
+    raise RuntimeError('Ya done broke things')
 
-with open('January.csv','w') as ofile:
-    wfiles = os.listdir(os.getcwd())
+with open(sys.argv[1],'w') as ofile:
+    wfiles = os.listdir(sys.argv[2])
     for work in wfiles:
         # make sure only grabbing wind data files
         if '.TXT'  in work:
