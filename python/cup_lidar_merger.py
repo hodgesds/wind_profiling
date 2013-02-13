@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os,sys
+import os,sys,traceback 
 #cut -f 26,34,42,50,58,66,84 -d , 9_2012.csv
 if len(sys.argv) <4:
     print "Usage: python cup_lidar_merger.py outfile cup_month.tsv lidar_month.tsv"
@@ -17,6 +17,7 @@ with open(sys.argv[2],'r') as cups:
 print 'found',len(cup_dict),'cups'
 print cup_dict[cup_dict.keys()[0]],cup_dict.keys()[0]
 
+odata = ''
 failures = 0
 with open(sys.argv[1],'w') as ofile:
     with open(sys.argv[3],'r') as lidar:
@@ -26,12 +27,12 @@ with open(sys.argv[1],'w') as ofile:
                 # 2012-01-01 00:00:00 vs 12/01/05 18:35:27
                 times = row.split(',')[0].replace('-','/').replace("2012",'12').replace("2013","13")
                 try:
-
                     odata = times + '\t' + row.split(',')[25] + '\t' + row.split(',')[33] + '\t' + row.split(',')[41] + + '\t' + row.split(',')[49] + '\t' + row.split(',')[57] + '\t' + row.split(',')[65] + '\t' + str(cup_dict[times]) + '\n'
                     ofile.write(odata)
                     print times,cup_dict.keys()[0]
                     raw_input()
                 except:
                     failures += 1
+                    traceback.print_exc(file=sys.stdout)
                     pass
 print failures,'observations failed to merge'
