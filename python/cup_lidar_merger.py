@@ -10,8 +10,8 @@ cup_dict = {}
 with open(sys.argv[2],'r') as cups:
     for row in cups:
         try:
-            # wind data actually on columns 10,12 so taking the average...
-            cup_dict[row.split("\t")[0]] = (float(row.split("\t")[10]) + float(row.split("\t")[12]))/2
+            # wind data actually on columns 8,10 so taking the average...
+            cup_dict[row.split("\t")[0]] = (float(row.split("\t")[8]) + float(row.split("\t")[10]))/2
         except:
             pass
 print 'found',len(cup_dict),'cups'
@@ -26,10 +26,11 @@ with open(sys.argv[1],'w') as ofile:
                 # 2012-01-01 00:00:00 vs 12/01/05 18:35:27
                 times = row.split(',')[0].replace('-','/').replace("2012",'12').replace("2013","13")
                 try:
-                    #print times
+
                     odata = times + '\t' + row.split(',')[25] + '\t' + row.split(',')[33] + '\t' + row.split(',')[41] + + '\t' + row.split(',')[49] + '\t' + row.split(',')[57] + '\t' + row.split(',')[65] + '\t' + str(cup_dict[times]) + '\n'
                     ofile.write(odata)
-                    
+                    print times,cup_dict.keys()[0]
+                    raw_input()
                 except:
                     failures += 1
                     pass
