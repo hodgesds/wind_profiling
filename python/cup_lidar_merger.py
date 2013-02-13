@@ -10,12 +10,9 @@ cup_dict = {}
 with open(sys.argv[2],'r') as cups:
     for row in cups:
         try:
-            # wind data actually on columns 8,10 so taking the average...
-            cup_dict[row.split("\t")[0]] = (float(row.split("\t")[8]) + float(row.split("\t")[10]))/2
-            #cdict[row.split("\t")[0]] = (float(row.split("\t")[5])) #+ float(row.split("\t")[10]))/2
-
+            # wind data actually on columns 10,12 so taking the average...
+            cup_dict[row.split("\t")[0]] = (float(row.split("\t")[10]) + float(row.split("\t")[12]))/2
         except:
-            #print float(row.split("\t")[8]) + float(row.split("\t")[10])
             pass
 print 'found',len(cup_dict),'cups'
 print cup_dict[cup_dict.keys()[0]],cup_dict.keys()[0]
