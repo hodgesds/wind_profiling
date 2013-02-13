@@ -18,22 +18,14 @@ import os,sys
 * [11] Instantaneous Services Per Second
 """
 if len(sys.argv) <3:
-    print "Usage: python message_7_converter.py message7_data.txt outdir"
+    print "Usage: python message_7_converter.py message7_data.csv outfile.tsv"
     raise RuntimeError('Ya done broke things')
 
-# big dict, big data
-big_dict = {}
 with open(sys.argv[1],'r') as cup:
-    for row in cup:
-        # grab out the time
-        time = row.replace('\n','').split("$")[0].replace("]","").replace("[","")
-        # split line on commas
-        line = row.split(",")
-        # make the big dict
-        big_dict[time] = line
-
-sorted(big_dict, key=big_dict.get)
-for key,value in big_dict.items():
-    print key,value
-    raw_input()
-#ofile.write('\t'.join(line)+'\n')
+    with open(sys.argv[2],'w') as ofile:
+        for row in cup:
+            # grab out the time
+            time = row.replace('\n','').split("$")[0].replace("]","").replace("[","")
+            # split line on commas
+            line = row.split(",")
+            ofile.write('\t'.join(line)+'\n')
