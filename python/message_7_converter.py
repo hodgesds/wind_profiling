@@ -28,4 +28,6 @@ with open(sys.argv[1],'r') as cup:
             time = row.replace('\n','').split("$")[0].replace("]","").replace("[","")
             # split line on commas
             line = row.split(",")
+            # time fix
+            line.insert(0,time)
             ofile.write('\t'.join(line)+'\n')
