@@ -22,8 +22,8 @@ with open(sys.argv[1],'w') as ofile:
     with open(sys.argv[3]) as lidar:
         for row in lidar:
             if 'Serial' not in row:
-                # fixe for difference in data storage
-                times = row.split(',')[0].replace('-','/').replace("2012",'12')
+                # fixes for difference in date storage
+                times = row.split(',')[0].replace('-','/').replace("2012",'12').replace("2013","13")
                 try:
                     odata = times + '\t' + row.split(',')[25] + '\t' + row.split(',')[33] + '\t' + row.split(',')[41] + + '\t' + row.split(',')[49] + '\t' + row.split(',')[57] + '\t' + row.split(',')[65] + '\t' + str(cup_dict[times]) + '\n'
                     ofile.write(odata)
