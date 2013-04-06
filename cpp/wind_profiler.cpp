@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     int nthreads = atoi(argv[3]);
     int header_row = 0;
     int split_count = 0;
-    char sep = ',';
+    char sep = '\t';
     int max_height=100;
     string timestamp;
     // loop through the file 

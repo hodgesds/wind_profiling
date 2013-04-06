@@ -14,7 +14,7 @@ rank = comm.Get_rank()
 
 
 row_counter = 1
-with open('mergedData.csv','r') as work:
+with open('all_2013.tsv','r') as work:
     for row in work:
         # Assume RGX HWS 1s as known @ 1 meter, comparing to laser estimates
         # Observed RG1
